@@ -151,7 +151,7 @@ solveCARNIVALSingle <- function(data = data, pknList = pknList,
       
       cbc_command <- paste0(solverPath, " testFile_", 1, "_", 
                             1, ".lp -seconds ", timelimit,
-                            " -ratio ", poolrelGAP, 
+                            " -ratio ", poolrelGAP,
                             " solve printi csv solu ", resFile)
       
       system(cbc_command)
