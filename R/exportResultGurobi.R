@@ -3,12 +3,12 @@
 ##
 ## Enio Gjerga, 2020
 
-exportResultGurobi <- function(cplexSolutionFileName = cplexSolutionFileName, 
+exportResultGurobi <- function(gurobiSolutionFileName = gurobiSolutionFileName, 
                             variables = variables, conditionIDX = conditionIDX,
                             pknList = pknList, inputs=inputs, 
                             measurements=measurements){
-  
-  solMatrix = read_delim(cplexSolutionFileName, " ", col_names=c("variable","value") )
+  browser()
+  solMatrix = read_delim(gurobiSolutionFileName, " ", col_names=c("variable","value") )
   
   vars <- solMatrix$name
   
@@ -231,7 +231,7 @@ exportResultGurobi <- function(cplexSolutionFileName = cplexSolutionFileName,
     nodesActAll[[length(nodesActAll)+1]] <- activityNodes
     
   }
-  
+  browser()
   if(length(sifAll)==0){
     
     message("No network was generated for this setting..")
@@ -367,7 +367,7 @@ exportResultGurobi <- function(cplexSolutionFileName = cplexSolutionFileName,
       }
       
     }
-    
+    browser()
     colnames(nodesAttributes) <- c("Node", "ZeroAct", "UpAct", 
                                    "DownAct", "AvgAct", "NodeType")
     
@@ -382,5 +382,6 @@ exportResultGurobi <- function(cplexSolutionFileName = cplexSolutionFileName,
     return(RES)
     
   }
+  
   
 }

@@ -77,6 +77,10 @@
 #' res3 = runCARNIVAL(inputObj = toy_inputs_ex1, measObj = toy_measurements_ex1,
 #'                    netObj = toy_network_ex1, solverPath = solverPath,
 #'                    solver = "cbc")
+#'                    
+#'res4 = runCARNIVAL(inputObj = toy_inputs_ex1, measObj = toy_measurements_ex1,
+#'                    netObj = toy_network_ex1, solverPath = solverPath,
+#'                    solver = "gurobi")
 #'
 #'@import doParallel
 #'@import readr
@@ -92,7 +96,7 @@ runCARNIVAL <- function(inputObj=NULL,
                         netObj=netObj,
                         weightObj=NULL,
                         solverPath=NULL,
-                        solver=c('lpSolve', 'cplex', 'cbc'),
+                        solver=c('lpSolve', 'cplex', 'cbc', 'gurobi'),
                         timelimit=3600,
                         mipGAP=0.05,
                         poolrelGAP=0.0001,
@@ -107,6 +111,7 @@ runCARNIVAL <- function(inputObj=NULL,
 {
 
   solver <- match.arg(solver)
+  message("Checking inputs...")
   res = checkInputs(solverPath = solverPath, netObj = netObj, measObj = measObj,
                     inputObj = inputObj, weightObj = weightObj,
                     timelimit = timelimit, mipGAP = mipGAP,
@@ -115,9 +120,9 @@ runCARNIVAL <- function(inputObj=NULL,
                     poolReplace = poolReplace, alphaWeight = alphaWeight,
                     betaWeight = betaWeight, dir_name = dir_name,
                     solver = solver, threads = threads)
-
+  message("Cleaning up previous CARNIVAL runs...")
   cleanupCARNIVAL(condition = res$condition, repIndex = res$repIndex)
-
+  message("solving CARNIVAL...")
   result = solveCARNIVAL(solverPath = solverPath, netObj = res$inputs$network,
                          measObj = res$measurements,
                          inputObj = res$inputs$inputs,

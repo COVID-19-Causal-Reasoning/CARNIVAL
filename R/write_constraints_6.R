@@ -85,6 +85,7 @@ write_constraints_6 <- function(variables=variables,
   }else cc1 <- NULL
   
   cc2 <- rep("", length(idx2))
+  browser()
   for(i in seq_len(length(idx2))){
     
     cc2[i] <- paste0(
@@ -107,6 +108,6 @@ write_constraints_6 <- function(variables=variables,
     ## cc2 <- c(cc2, cc)
     
   }
-
+browser()
   return(c(cc1, cc2))
 }

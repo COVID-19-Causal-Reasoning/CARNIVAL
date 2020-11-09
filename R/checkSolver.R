@@ -23,7 +23,7 @@ checkSolver <- function(solverPath = solverPath, solver = solver,
     stop("solver should be of type character")
   } else {
     ## checking for solver validity (cplex/cbc/lpSolve)
-    valid_solver_list <- c("cplex", "cbc", "lpSolve")
+    valid_solver_list <- c("cplex", "cbc", "lpSolve", "gurobi")
     if (!(solver %in% valid_solver_list)){
       stop(paste0("Select a valid solver option (", 
                   paste(valid_solver_list, collapse=", "), ")"))

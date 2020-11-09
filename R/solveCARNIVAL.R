@@ -44,7 +44,7 @@ solveCARNIVAL <- function(solverPath = solverPath,
   pknList <<- pknList
   
   if(is.null(experimental_conditions)){
-    
+    message("Saving CARNIVAL single...")
     result <- solveCARNIVALSingle(data = measurements, pknList = pknList, 
                                   inputs = inputObj, betaWeight = betaWeight, 
                                   scores = weightObj, mipGAP = mipGAP, 

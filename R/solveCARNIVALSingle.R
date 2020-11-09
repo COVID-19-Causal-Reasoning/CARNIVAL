@@ -16,22 +16,23 @@ solveCARNIVALSingle <- function(data = data, pknList = pknList,
                                 solverPath = solverPath, variables = variables,
                                 measObj = measObj, inputObj = inputObj, 
                                 dir_name = dir_name){
-  
-  variables <- writeLPFile(data = data, pknList = pknList,
-                           inputs = inputs, alphaWeight = alphaWeight,
-                           betaWeight = betaWeight, scores = scores,
-                           mipGAP = mipGAP, poolrelGAP = poolrelGAP,
-                           limitPop = limitPop, poolCap = poolCap,
-                           poolIntensity = poolIntensity,
-                           threads = threads,
-                           poolReplace = poolReplace, timelimit = timelimit,
-                           measWeights = measWeights, repIndex = repIndex,
-                           condition = condition)
-  
+  message("Writing LP file...")
+
+  variables <- list.unserialize('carnival_variables.json')
+  # variables <- writeLPFile(data = data, pknList = pknList,
+  #                          inputs = inputs, alphaWeight = alphaWeight,
+  #                          betaWeight = betaWeight, scores = scores,
+  #                          mipGAP = mipGAP, poolrelGAP = poolrelGAP,
+  #                          limitPop = limitPop, poolCap = poolCap,
+  #                          poolIntensity = poolIntensity,
+  #                          threads = threads,
+  #                          poolReplace = poolReplace, timelimit = timelimit,
+  #                          measWeights = measWeights, repIndex = repIndex,
+  #                          condition = condition)
+  # 
   ## Solve ILP problem with cplex, remove temp files, 
   ## and return to the main directory
   message("Solving LP problem...")
-  
   if(solver=="cplex"){
     
     if (Sys.info()[1]=="Windows") {
@@ -93,23 +94,24 @@ solveCARNIVALSingle <- function(data = data, pknList = pknList,
     
   } else if(solver == "gurobi"){
     
-      system(paste0("bash gurobiCommand_", 
-                    condition,"_",repIndex,".txt"))
+    #  system(paste0("bash gurobiCommand_", 
+    #                condition,"_",repIndex,".txt"))
 
     
     ## Write result files in the results folder
     message("Saving results...")
     resList <- list()
-    if (file.exists(paste0("results_gurobi_",condition,"_",repIndex,".txt"))) {
+    resFile <-paste0("results_gurobi_",condition,"_",repIndex,".sol")
+    if (file.exists (resFile)) {
       for(i in seq_len(length(variables))){
-        res <- exportResult(cplexSolutionFileName = paste0("results_gurobi_",
-                                                           condition,"_",
-                                                           repIndex,".txt"),
+        browser()
+        res <- exportResult(cplexSolutionFileName = resFile,
                             variables = variables, 
                             pknList = pknList, 
                             conditionIDX = i,
                             inputs=inputObj,
-                            measurements=measObj)
+                            measurements=measObj,
+                            solver=solver)
         resList[[length(resList)+1]] <- res
       }
       if (!is.null(res)) {
@@ -128,6 +130,8 @@ solveCARNIVALSingle <- function(data = data, pknList = pknList,
         message("No result to be written")
         return(NULL)
       }
+    } else {
+      browser()
     }
     
     cleanupCARNIVAL(condition = condition, repIndex = repIndex)

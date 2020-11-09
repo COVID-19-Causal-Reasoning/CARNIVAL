@@ -18,7 +18,7 @@ exportResult <- function(cplexSolutionFileName = cplexSolutionFileName,
     
   } else if(solver=="gurobi"){
       
-      RES <- exportResultGurobi(cplexSolutionFileName = cplexSolutionFileName, 
+      RES <- exportResultGurobi(gurobiSolutionFileName = cplexSolutionFileName, 
                              variables = variables, conditionIDX = conditionIDX, 
                              pknList = pknList, inputs = inputs, 
                              measurements = measurements)
