@@ -102,9 +102,9 @@ solveCARNIVALSingle <- function(data = data, pknList = pknList,
     message("Saving results...")
     resList <- list()
     resFile <-paste0("results_gurobi_",condition,"_",repIndex,".sol")
+    message(paste0("result file: ", resFile))
     if (file.exists (resFile)) {
       for(i in seq_len(length(variables))){
-        browser()
         res <- exportResult(cplexSolutionFileName = resFile,
                             variables = variables, 
                             pknList = pknList, 

@@ -3,14 +3,14 @@
 ##
 ## Enio Gjerga, 2020
 
-exportResultGurobi <- function(gurobiSolutionFileName = gurobiSolutionFileName, 
+exportResultGurobi <- function(cplexSolutionFileName = cplexSolutionFileName,
                             variables = variables, conditionIDX = conditionIDX,
                             pknList = pknList, inputs=inputs, 
                             measurements=measurements){
+
   browser()
-  solMatrix = read_delim(gurobiSolutionFileName, " ", col_names=c("variable","value") )
-  
-  vars <- solMatrix$name
+  solMatrix = read_delim(cplexSolutionFileName, " ", comment= "#",col_names=c("variable","value") )
+  vars <- solMatrix$variable
   
   sifAll <- list()
   nodesAll <- list()
