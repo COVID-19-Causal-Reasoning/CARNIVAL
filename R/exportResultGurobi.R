@@ -8,7 +8,7 @@ exportResultGurobi <- function(cplexSolutionFileName = cplexSolutionFileName,
                             pknList = pknList, inputs=inputs, 
                             measurements=measurements){
 
-  browser()
+
   solMatrix = read_delim(cplexSolutionFileName, " ", comment= "#",col_names=c("variable","value") )
   vars <- solMatrix$variable
   
